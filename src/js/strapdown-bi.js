@@ -17,9 +17,8 @@
         }
     });
 
-  if ($('.toc').html()) { // If there is a toc, move the content to the side.
-
-        generatedContent.addClass('col-sm-10 col-sm-offset-2');
+    if ($('.toc').html()) { // If there is a toc, move the content to the side.
+        $('#content').addClass('col-sm-10 col-sm-offset-2').wrap('<div class="row"></div>');
     }
 
 
