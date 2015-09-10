@@ -22,7 +22,9 @@
 			'vendor/jquery/dist/jquery.min.js',
 			'vendor/marked/marked.min.js',
 			'vendor/google-code-prettify/bin/prettify.min.js',
-			'vendor/bootstrap/js/scrollspy.js'
+			'vendor/bootstrap/js/scrollspy.js',
+			'vendor/bootstrap/js/transitions.js',
+			'vendor/bootstrap/js/collapse.js',
 		];
 
 		grunt.initConfig({
