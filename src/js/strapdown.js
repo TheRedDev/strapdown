@@ -19,6 +19,11 @@
       return '';
     },
 
+    importLiveReload: function () {
+      console.log("Enabling livereload");
+      $(document.head).append($('<script src="http://localhost:35729/livereload.js"></script>'));
+    },
+
     importCss: function () {
       // @TODO proper theme management
       $(document.head).append($('<link/>', {href: _.getStrapdownOrigin() + '/strapdown.css', rel: 'stylesheet'}));
@@ -141,6 +146,9 @@
       var settings = _.normalizeOptions(_.extractAttributeOptions(target), options);
       var updatedDom = _.updateBody(target, settings);
 
+      if (settings.importLiveReload) {
+        _.importLiveReload();
+      }
       if (settings.importCss) {
         _.updateHead();
       }
@@ -171,7 +179,8 @@
   $.fn.strapdown.defaults = {
     importCss: false,
     navbar: false,
-    toc: false
+    toc: false,
+    importLiveReload: true,
   };
 
   // @ifdef DEBUG

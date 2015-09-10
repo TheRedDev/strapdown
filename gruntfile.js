@@ -122,12 +122,16 @@
 			delta: {
 				js: {
 					files: ['<%= jshint.files %>'],
-					tasks: ['test', 'preprocess:dev', 'concat']
+					tasks: ['test', 'preprocess:dev', 'concat'],
 				},
 				less: {
 					files: ['src/**/*.less'],
 					tasks: ['less']
-				}
+				},
+                                livereload: {
+                                        options: { livereload: true },
+                                        files: ['dist/**/*'],
+                                },
 			},
 
 			less: {
