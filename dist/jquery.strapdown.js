@@ -19,31 +19,44 @@
       return '';
     },
 
-    importCss: function () {
-      // @TODO proper theme management
-      $(document.head).append($('<link/>', {href: _.getStrapdownOrigin() + '/strapdown.css', rel: 'stylesheet'}));
+    importLiveReload: function () {
+      console.log("Enabling livereload");
+      $(document.head).append($('<script src="http://localhost:35729/livereload.js"></script>'));
     },
 
-    updateHead: function () {
+    importCss: function (settings) {
+      var origin = _.getStrapdownOrigin();
+      function addStyleSheet(sheet) {
+        $(document.head).append($('<link/>', {
+          href: origin + '/' + sheet,
+          rel: 'stylesheet'}));
+      }
+      addStyleSheet('themes/' + settings.theme + '.css');
+    },
+
+    updateHead: function (settings) {
       // Use <meta> viewport so that Bootstrap is actually responsive on mobile
       $(document.head).prepend($('<meta name="viewport" content="width=device-width, initial-scale=1">')); // why was it 'max/min width = 1'?
-      _.importCss();
+      if(settings.importCss) {
+        _.importCss(settings);
+      }
     },
 
     createNavbar: function (settings) {
       if (!settings.navbar) {return;}
+      console.log("Creating navbar", settings.navbar);
       var navbarCollapseBtn = ' <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">' +
                               '   Table of Contents' +
                               ' </button>',
           tocInsertionPoint = '<div class="toc collapse navbar-collapse"></div>',
-          navbarTitle       = '<div id="headline" class="navbar-brand">' + settings.navbar.title +'</div>'
+          navbarHeader       = ' <div class="navbar-header"><div id="headline" class="navbar-brand">' + settings.navbar.title +'</div></div>'
           ;
 
       var newNode = document.createElement('div');
-      newNode.className = 'navbar navbar-inverse navbar-fixed-top';
-      newNode.innerHTML = '<div class="container"> <div class="navbar-header">' +
-                          (settings.toc ? navbarCollapseBtn + navbarTitle + tocInsertionPoint : navbarTitle) +
-                          '</div> </div>';
+      newNode.className = 'navbar navbar-default navbar-fixed-top';
+      newNode.innerHTML = '<div class="container">' +
+                          (settings.toc ? navbarCollapseBtn + navbarHeader + tocInsertionPoint : navbarHeader) +
+                          '</div>';
 
       if (settings.toc) {
         settings.toc.dest = '.toc';
@@ -93,19 +106,22 @@
       var htmlOptions = {};
 
       $.each(mdEl.get(0).attributes, function (idx, el) {
-        if (el.name.indexOf('toc') === 0) {
-          if (! htmlOptions.toc) {
-            htmlOptions.toc = {};
+        switch (el.name) {
+        case 'toc':
+          if(!htmlOptions.toc) htmlOptions.toc = {};
+          break;
+        case 'toc-top-link':
+          if(!htmlOptions.toc) htmlOptions.toc = {};
+          htmlOptions.toc.topLink = el.value ? el.value : 'Back to top';
+          break;
+        case 'toc-disabled':
+          if(!htmlOptions.toc) htmlOptions.toc = {};
+          htmlOptions.toc.disabled = true;
+          break;
+        case 'theme':
+          htmlOptions.theme = el.value;
+          break;
           }
-          switch (el.name) {
-            case 'toc-top-link':
-              htmlOptions.toc.topLink = el.value ? el.value : 'Back to top';
-              break;
-            case 'toc-disabled':
-              htmlOptions.toc.disabled = true;
-              break;
-          }
-        }
       });
 
       return htmlOptions;
@@ -141,9 +157,10 @@
       var settings = _.normalizeOptions(_.extractAttributeOptions(target), options);
       var updatedDom = _.updateBody(target, settings);
 
-      if (settings.importCss) {
-        _.updateHead();
+      if (settings.importLiveReload) {
+        _.importLiveReload();
       }
+      _.updateHead(settings);
 
       if (settings.navbar) {
         _.createNavbar(settings);
@@ -171,8 +188,11 @@
   $.fn.strapdown.defaults = {
     importCss: false,
     navbar: false,
-    toc: false
+    toc: false,
+    importLiveReload: false,
+    theme: 'united',
   };
+
 
 }( jQuery ));
 
@@ -284,5 +304,6 @@
 
     return this;
   };
+
 
 }( jQuery ));
