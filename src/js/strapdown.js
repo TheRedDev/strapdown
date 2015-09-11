@@ -24,20 +24,22 @@
       $(document.head).append($('<script src="http://localhost:35729/livereload.js"></script>'));
     },
 
-    importCss: function () {
+    importCss: function (settings) {
       var origin = _.getStrapdownOrigin();
       function addStyleSheet(sheet) {
         $(document.head).append($('<link/>', {
           href: origin + '/' + sheet,
           rel: 'stylesheet'}));
       }
-      addStyleSheet('strapdown.css');
+      addStyleSheet('themes/' + settings.theme + '.css');
     },
 
-    updateHead: function () {
+    updateHead: function (settings) {
       // Use <meta> viewport so that Bootstrap is actually responsive on mobile
       $(document.head).prepend($('<meta name="viewport" content="width=device-width, initial-scale=1">')); // why was it 'max/min width = 1'?
-      _.importCss();
+      if(settings.importCss) {
+        _.importCss(settings);
+      }
     },
 
     createNavbar: function (settings) {
@@ -158,9 +160,7 @@
       if (settings.importLiveReload) {
         _.importLiveReload();
       }
-      if (settings.importCss) {
-        _.updateHead();
-      }
+      _.updateHead(settings);
 
       if (settings.navbar) {
         _.createNavbar(settings);
@@ -189,7 +189,8 @@
     importCss: false,
     navbar: false,
     toc: false,
-    importLiveReload: true,
+    importLiveReload: false,
+    theme: 'united',
   };
 
   // @ifdef DEBUG
