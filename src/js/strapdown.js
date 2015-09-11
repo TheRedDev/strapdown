@@ -104,19 +104,22 @@
       var htmlOptions = {};
 
       $.each(mdEl.get(0).attributes, function (idx, el) {
-        if (el.name.indexOf('toc') === 0) {
-          if (! htmlOptions.toc) {
-            htmlOptions.toc = {};
+        switch (el.name) {
+        case 'toc':
+          if(!htmlOptions.toc) htmlOptions.toc = {};
+          break;
+        case 'toc-top-link':
+          if(!htmlOptions.toc) htmlOptions.toc = {};
+          htmlOptions.toc.topLink = el.value ? el.value : 'Back to top';
+          break;
+        case 'toc-disabled':
+          if(!htmlOptions.toc) htmlOptions.toc = {};
+          htmlOptions.toc.disabled = true;
+          break;
+        case 'theme':
+          htmlOptions.theme = el.value;
+          break;
           }
-          switch (el.name) {
-            case 'toc-top-link':
-              htmlOptions.toc.topLink = el.value ? el.value : 'Back to top';
-              break;
-            case 'toc-disabled':
-              htmlOptions.toc.disabled = true;
-              break;
-          }
-        }
       });
 
       return htmlOptions;
