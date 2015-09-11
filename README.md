@@ -1,10 +1,10 @@
 # Strapdown.js
 
-Strapdown.js makes it embarrassingly simple to create elegant Markdown documents. No server-side compilation required.  
+Strapdown.js makes it embarrassingly simple to create elegant Markdown documents. No server-side compilation required.
 
 This is a fork of the awesome project at http://strapdownjs.com
 
-This fork adds auto generated table of contents and can be used as a jQuery plugin.
+https://github.com/ndossougbe/strapdown added a TOC, which is awesome, but only had one theme built in. This fork adds all the bootswatch themes through several ugly hacks :-).
 
 For more, please see:
 
