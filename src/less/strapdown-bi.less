@@ -8,7 +8,20 @@
  * Library imports
  *****************************************************************************/
 
-@import (less) 'vendor/bootswatch/lumen/bootstrap.css';
+@theme:  "united";
+@import (less) 'vendor/bootstrap/less/bootstrap.less';
+@import (less) 'vendor/bootswatch/@{theme}/variables.less';
+
+@navbar-default-link-color:                @link-color;
+@navbar-default-link-hover-color:          @link-hover-color;
+@navbar-default-link-hover-bg:             transparent;
+@navbar-default-link-active-color:         @navbar-default-link-hover-color;
+@navbar-default-link-active-bg:            transparent;
+@navbar-default-link-disabled-color:       @gray-lighter;
+@navbar-default-link-disabled-bg:          transparent;
+@navbar-default-brand-color: @navbar-default-color;
+
+@import (less) 'vendor/bootswatch/@{theme}/bootswatch.less';
 @import (less) 'vendor/google-code-prettify/bin/prettify.min.css';
 
 
@@ -18,7 +31,6 @@
 
 @import 'strapdown.less';
 
-
-// xmp, textarea {
-//   display: none;
-// }
+button.navbar-toggle {
+        color: @navbar-default-brand-color;
+}

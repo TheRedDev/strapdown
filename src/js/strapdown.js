@@ -25,8 +25,13 @@
     },
 
     importCss: function () {
-      // @TODO proper theme management
-      $(document.head).append($('<link/>', {href: _.getStrapdownOrigin() + '/strapdown.css', rel: 'stylesheet'}));
+      var origin = _.getStrapdownOrigin();
+      function addStyleSheet(sheet) {
+        $(document.head).append($('<link/>', {
+          href: origin + '/' + sheet,
+          rel: 'stylesheet'}));
+      }
+      addStyleSheet('strapdown.css');
     },
 
     updateHead: function () {
@@ -37,18 +42,19 @@
 
     createNavbar: function (settings) {
       if (!settings.navbar) {return;}
+      console.log("Creating navbar", settings.navbar);
       var navbarCollapseBtn = ' <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">' +
                               '   Table of Contents' +
                               ' </button>',
           tocInsertionPoint = '<div class="toc collapse navbar-collapse"></div>',
-          navbarTitle       = '<div id="headline" class="navbar-brand">' + settings.navbar.title +'</div>'
+          navbarHeader       = ' <div class="navbar-header"><div id="headline" class="navbar-brand">' + settings.navbar.title +'</div></div>'
           ;
 
       var newNode = document.createElement('div');
-      newNode.className = 'navbar navbar-inverse navbar-fixed-top';
-      newNode.innerHTML = '<div class="container"> <div class="navbar-header">' +
-                          (settings.toc ? navbarCollapseBtn + navbarTitle + tocInsertionPoint : navbarTitle) +
-                          '</div> </div>';
+      newNode.className = 'navbar navbar-default navbar-fixed-top';
+      newNode.innerHTML = '<div class="container">' +
+                          (settings.toc ? navbarCollapseBtn + navbarHeader + tocInsertionPoint : navbarHeader) +
+                          '</div>';
 
       if (settings.toc) {
         settings.toc.dest = '.toc';

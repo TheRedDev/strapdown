@@ -57,13 +57,6 @@ body {
 		display: none;
 	}
 
-	li>a {
-		display: block;
-		@media screen and (min-width: (@max-xs-screen-width + 1)) {
-			color: @toc-link-color !important;
-		}
-	}
-
 	/* Reset list styles indent */
 	ul {
 		padding-left: 0px;
@@ -108,26 +101,8 @@ body {
 		padding-top: 20px;
 	}
 
-}
-
-/* Styles in xs mode  */
-@media screen and (max-width: @max-xs-screen-width) {
-	.navbar {
+        &.collapse.in {
 		 /* instead of transparent, to make the menus readable. */
 		background-color: white;
-	}
-
-	/* applying inverse style to all the links of the navbar */
-	.navbar-inverse .navbar-nav {
-		li>a {
-			color: #999;
-		}
-
-		li>a:hover,
-		li.active>a {
-			color: #333;
-			text-decoration: none;
-		}
-
 	}
 }
