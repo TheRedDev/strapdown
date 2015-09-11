@@ -151,7 +151,6 @@
 			clean: {
 				files: {
 					src: [
-						'dist/',
 						'demos/vendor/',
 						'tmp/'
 					]
