@@ -9,6 +9,6 @@ for THEME in $THEMES; do
     echo "Building theme $THEME"
     git checkout src/less/strapdown-bi.less
     sed s/_THEME_/$THEME/ -i src/less/strapdown-bi.less
-    grunt
+    grunt build
     mv dist/strapdown.css dist/themes/$THEME.css
 done
