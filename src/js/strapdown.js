@@ -105,7 +105,7 @@
     extractAttributeOptions: function (mdEl) {
       var htmlOptions = {};
 
-      $.each(mdEl.get(0).attributes, function (idx, el) {
+      $.each(mdEl.get(0)?.attributes, function (idx, el) {
         switch (el.name) {
         case 'toc':
           if(!htmlOptions.toc) htmlOptions.toc = {};
